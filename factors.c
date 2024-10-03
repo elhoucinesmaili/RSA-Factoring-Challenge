@@ -1,17 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-void factorize_number(long long n) {
-    for (long long p = 2; p <= sqrt(n); p++) {
-        if (n % p == 0) {
-            long long q = n / p;
-            printf("%lld=%lld*%lld\n", n, p, q);
-            return; // Only print one factorization
+void factorize(long n) {
+    for (long i = 2; i <= n / 2; i++) {
+        if (n % i == 0) {
+            long j = n / i;
+            printf("%ld=%ld*%ld\n", n, j, i);
+            return; // Return after finding the first pair of factors
         }
     }
-    // If no factors found, print the number as is (which shouldn't happen for n > 1)
-    printf("%lld=%lld*1\n", n, n);
 }
 
 int main(int argc, char *argv[]) {
@@ -26,11 +23,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    long long number;
-    while (fscanf(file, "%lld", &number) != EOF) {
-        factorize_number(number);
+    long number;
+    while (fscanf(file, "%ld", &number) == 1) {
+        factorize(number);
     }
 
     fclose(file);
     return 0;
 }
+
