@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 /**
  * trial_division - Function to perform trial division to find two factors
@@ -12,7 +11,7 @@ void trial_division(unsigned long long n)
 {
     unsigned long long i;
 
-    for (i = 2; i <= sqrt(n); i++)
+    for (i = 2; i * i <= n; i++)
     {
         if (n % i == 0)
         {
@@ -54,7 +53,10 @@ int main(int argc, char *argv[])
     while ((read = getline(&line, &len, file)) != -1)
     {
         num = strtoull(line, NULL, 10);
-        trial_division(num);
+        if (num > 1)  // Factorize only numbers greater than 1
+        {
+            trial_division(num);
+        }
     }
 
     fclose(file);
