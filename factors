@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Module for factoring numbers"""
+from sys import argv
+from math import sqrt
+
+
+def load_numbers_from_file(file_path):
+    """
+    Read numbers from a file and return them as a list.
+
+    Args:
+        file_path (str): Path to the input file.
+
+    Returns:
+        list: List of integers read from the file.
+    """
+    with open(file_path, "r", encoding="utf-8") as input_file:
+        content = input_file.readlines()
+    return [int(line.strip()) for line in content]
+
+
+def find_factors(target_number):
+    """
+    Find and print factors of a given number.
+
+    Args:
+        target_number (int): Number to factorize.
+    """
+    for potential_factor in range(1, target_number):
+        if target_number == ((target_number // potential_factor) * potential_factor):
+            print(f"{target_number}={target_number // potential_factor}*{potential_factor}")
+            break
+
+
+def factorize_list(number_list):
+    """
+    Factorize each number in the given list.
+
+    Args:
+        number_list (list): List of numbers to factorize.
+    """
+    for num in number_list:
+        find_factors(num)
+
+
+if len(argv) == 2:
+    factorize_list(load_numbers_from_file(argv[1]))
