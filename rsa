@@ -1,0 +1,49 @@
+#!/usr/bin/python3
+import math
+
+def rsa_factoring(n):
+    """
+    Factorize a given RSA number into its prime components.
+    Input:
+        n (int): The RSA number to be factored.
+    Output:
+        tuple: A pair of prime factors (p, q) where n = p * q.
+    """
+    def is_prime(num):
+        """
+        Determine the primality of a given number.
+        Input:
+            num (int): The number to test for primality.
+        Output:
+            bool: True if num is prime, False otherwise.
+        """
+        if num < 2:
+            return False
+        for index in range(2, math.isqrt(num) + 1):
+            if num % index == 0:
+                return False
+        return True
+
+    for index in range(2, math.isqrt(n) + 1):
+        if n % index == 0:
+            factor = n // index
+            if is_prime(index) and is_prime(factor):
+                return (index, factor)
+    return None
+
+def main():
+    """
+    Process the input file and perform RSA factorization on the contained number.
+    """
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: rsa.py <file>")
+        return
+    file_path = sys.argv[1]
+    with open(file_path, 'r') as file:
+        n = int(file.read().strip())
+        p, q = rsa_factoring(n)
+        print(f"{n}={max(p, q)}*{min(p, q)}")
+
+if __name__ == "__main__":
+    main()
